@@ -1,0 +1,18 @@
+{
+  "name": "showroom-test",
+  "version": "1.0.0",
+  "description": "Showroom Visualization. Easy to filter Live-Showroom 48G Member. AKB48, SKE48, NMB48, HKT48, NGT48, STU48, and bit another Member. Katakloncat - GB_Sources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["showroom", "48G", "Vis.js", "socket.io"],
+  "author": "goruakiba",
+  "license": "GNU GPLv3",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "socket.io": "^2.3.0",
+    "superagent": "^6.0.0"
+  }
+}

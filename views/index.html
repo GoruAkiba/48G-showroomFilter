@@ -1,0 +1,461 @@
+<html>
+	<head>
+		<title>
+			Showroom Filter
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Showroom Visualization. Easy to filter Live-Showroom 48G Member. AKB48, SKE48, NMB48, HKT48, NGT48, STU48, and bit another Member. Katakloncat - GB_Sources">
+		<!-- Bootstrap begin -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+		<!-- Bootstrap end -->
+
+		<style>
+			body{
+				background-color: #0D101E;
+			}
+
+			#brand{
+				position: absolute;
+				z-index: -1;
+				bottom: 0;
+				right: 0;
+				text-align: right;
+				padding: 30px;
+			}
+
+			#brand p{
+				font-size: small;
+			}
+
+			.inblk{
+				position: relative;
+				display: inline-block;
+
+				vertical-align: top;
+				margin: 10px
+			}
+
+			#mynetwork {
+					width: 100vw ;
+					height: 100vh ;
+					/* border: 1px solid lightgray; */
+			}
+
+			.member-pp{
+				--w: 110px;
+				width: var(--w);
+				height: var(--w);
+				border-radius: 50%;
+
+				background-color: white;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				border: 4px solid white;
+			}
+
+			#member-info h5{
+				padding: 2px;
+    		background-color: #0000002b;
+			}
+
+			#member-info p{
+				padding: 2px;
+    		background-color: #ffffff73;
+			}
+
+			#header-bg{
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				position: relative;
+			}
+
+			.modal-header{
+				border-bottom: 1px solid #dee2e63d;
+			}
+
+			.card-header{
+				border-top: 2px solid #dee2e63d;
+			}
+
+			.modal-footer{
+				border-top: 1px solid #dee2e63d;
+			}
+
+			.blur {
+				position:absolute;
+				background: rgba(255, 255, 255, 0.2); 
+				backdrop-filter: blur(8px);
+				height: 100%;
+				width: 100%;
+			}
+
+			.close:focus{
+				outline: none;
+			}
+
+			#sns{
+				position: absolute;
+				bottom: 0px;
+				right: 0px;
+
+			}
+
+			.sns-child{
+				--w: 30px;
+				width: var(--w);
+				height: var(--w);
+
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-positiom: center;
+			}
+		</style>
+
+	</head>
+	<body class="text-light">
+		<div id="brand">
+			<h3>Vis48G</h3>
+			<p>
+				a visualization of Showroom 48G member<br> 
+				and another idol online status<br>
+				<span class="text-secondary">Katakloncat - GB_Sources</span>
+			</p>
+		</div>
+		<div class="container-fluid  p-0 m-0">
+			<div class="row p-0 m-0">
+				<div class="col-lg-12  p-0 m-0">
+					<!-- <canvas id="mynetwork"></canvas> -->
+					<div id="mynetwork"></div>
+				</div>
+			</div>
+		</div>
+		<!-- module section begin -->
+		<!-- Button trigger modal -->
+		<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			Launch demo modal
+		</button> -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content bg-dark">
+					<div id="header-bg">
+						<div class="blur"></div>
+						<div class="modal-header">
+							<div id="member-info" style="max-width:90%"></div>
+							<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div id="sns" class="p-1"></div>
+					</div>
+					<div class="modal-body p-0" >
+						<div id="modal-info"></div>
+						<div class="accordion m-0" id="accordionExample">
+							<!-- accordion goes here -->
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="" target="blank" id="member-room-uri">
+							<button type="button" class="btn btn-light">Goto room</button>
+						</a>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- module section end -->
+	</body>
+	<!-- vis.js begin -->
+	<script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+	<!-- vis.js end -->
+	<script src="/socket.io/socket.io.js"></script>
+	<!-- <script defer type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+	<script>
+		var shApp = {
+			selector : "mynetwork",
+			container : function(){
+				return document.getElementById(this.selector)
+			},
+			options : {
+        nodes: {
+          borderWidth:2,
+          size:40,
+	      color: {
+            border: '#222222',
+            background: '#666666'
+          },
+          font:{
+          	color:'#eee',
+          	size: 10
+          },
+          shapeProperties:{
+          	borderRadius:15
+          }
+        },
+        edges: {
+          color: '#eef'
+        },
+        physics: {
+					barnesHut: {
+						gravitationalConstant: -6350,
+						centralGravity: 0.5,
+						springLength: 160,
+						springConstant: 0.2
+					},
+					minVelocity: 0.5,
+					timestep: 0.4
+				}
+				
+			},
+			image: "https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png",			
+			nodesArr : [
+				{id: "showroom", shape: 'circularImage', image: "https://image.winudf.com/v2/image1/anAuZGVuYS5zaG93cm9vbV9pY29uXzE1ODMzOTY3NDVfMDkw/icon.png?w=170&fakeurl=1", size:75},
+        {id: "48G", shape: 'circularImage', image: "/images/48G.png", label: '48Group'},
+				{id: "46G", shape: 'circularImage', image: "/images/46G.png", label: '46Group'},
+				{id: "akb48", shape: 'circularImage', image: "/images/AKB48.png", label: 'AKB48'},
+				{id: "ske48", shape: 'circularImage', image: "/images/SKE48.png", label: 'SKE48'},
+				{id: "hkt48", shape: 'circularImage', image: "/images/HKT48.png", label: 'HKT48'},
+				{id: "nmb48", shape: 'circularImage', image: "/images/NMB48.png", label: 'NMB48'},
+				{id: "ngt48", shape: 'circularImage', image: "/images/NGT48.png", label: 'NGT48'},
+				{id: "stu48", shape: 'circularImage', image: "/images/STU48.png", label: 'STU48'},
+				{id: "jkt48", shape: 'circularImage', image: "/images/JKT48.png", label: 'JKT48'},
+				{id: "nogizaka46", shape: 'circularImage', image: "/images/NOGIZAKA46.png", label: 'NOGIZAKA46'},
+				{id: "keyakizaka46", shape: 'circularImage', image: "/images/KEYAKIZAKA46.png", label: 'KEYAKIZAKA46'},
+				{id: "hinatazaka46", shape: 'circularImage', image: "/images/HINATAZAKA46.png", label: 'HINATAZAKA46'},
+        {id: "other", shape: 'circularImage', image: "/images/other.png", label: 'another Idol'},
+				{id: "former", shape: 'circularImage', image: "/images/FORMER.png", label: 'Former members'}
+			],
+			edgesArr : [
+				{from: "showroom", to: "other"},
+        {from: "showroom", to: "48G"},
+				{from: "showroom", to: "46G"},
+				{from: "48G", to: "former"},
+				{from: "48G", to: "akb48"},
+				{from: "48G", to: "ske48"},
+				{from: "48G", to: "hkt48"},
+				{from: "48G", to: "nmb48"},
+				{from: "48G", to: "ngt48"},
+				{from: "48G", to: "stu48"},
+				{from: "48G", to: "jkt48"},
+				{from: "46G", to: "nogizaka46"},
+				{from: "46G", to: "keyakizaka46"},
+				{from: "46G", to: "hinatazaka46"},
+			],
+			data : {},
+			network : {},
+			caching:[],
+			addData : function({id,label,size,img,to}){
+				if(this.caching.includes(id)) return;
+				this.data.nodes.add({
+					id: id,
+					label: label,
+					shape: 'circularImage',
+					image: img || this.image,
+					size: size || 35
+				});
+
+				this.data.edges.add({
+					id: id,
+					from: id,
+					to : to
+				});
+
+				this.caching.push(id);
+
+			},
+			removeData : function(id){
+				this.data.nodes.remove(id);
+				this.data.edges.remove(id);
+				this.caching.splice(this.caching.indexOf(id),1);
+			},
+			exec : function(){
+				var data = {
+					nodes : new vis.DataSet(this.nodesArr),
+					edges : new vis.DataSet(this.edgesArr)
+				};
+				this.data = data;
+				this.network = new vis.Network(this.container(), data, this.options);
+				this.network.on("doubleClick", (event)=> {
+					if(!event.edges.length) return;
+					if(event.edges[0] !== event.nodes[0]) return;
+					console.log(event);
+					socket.emit("roomProfile", {id:event.nodes[0]} )
+				})
+				if(prevNowOnline) clearInterval(prevNowOnline);
+				var opt ={
+					offset:{x:700,y:300},
+					scale:0.02,
+					animation: {             // animation object, can also be Boolean
+						duration: 2500,                 // animation duration in milliseconds (Number)
+						easingFunction: "easeOutQuad" // Animation easing function, available are:
+					} 
+				};
+				this.network.moveTo(opt);
+			}	
+		}
+
+		shApp.exec();
+
+		// web socket
+		const socket = io("/");
+		socket.on("init-vis", data => {
+			// console.log(data);
+			data.map(e=>{
+				shApp.addData({
+					id: e.room_id,
+					label: e.room_url_key,
+					img: e.image,
+					size: 35,
+					to: e.to
+				})
+			})
+		})
+
+		socket.on("update", data => {
+			// update nodes
+			// add new nodes
+			data.to_update.map(e => {
+				shApp.addData({
+					id: e.room_id,
+					label: e.room_url_key,
+					img: e.image,
+					size: 35,
+					to: e.to
+				});
+
+			// remove nodes
+			data.to_remove.map(e=>{
+			shApp.removeData(e)
+			})
+			})
+		})
+
+		var prevNowOnline = null;
+		socket.on("roomProfile", async data =>{
+			console.log(data);
+			const target = $("#accordionExample");
+			const memb = $("#member-info");
+			target.empty();
+
+			if(!data.is_onlive) return shApp.removeData(data.room_id);
+
+			if(data.share_text_live){
+				$("#modal-info").append(`
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						${data.share_text_live}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				`)
+			}
+
+			if(data.sns_list){
+				// do stuff if tere is sns account provided
+				var sns = data.sns_list.map((e)=>{
+					console.log(e);
+					return (`
+						<a href="${e.url}" class="inblk m-0" target="blak">
+							<div class="sns-child" style="background-image:url('${e.icon}')"></div>
+						</a>
+					`)
+				});
+
+				$("#sns").empty().append(sns.join(""));
+			}
+
+			if(data.description){
+				target.append(`
+					<div class="card bg-dark">
+						<div class="card-header" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									Description Room
+								</button>
+							</h2>
+						</div>
+
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+							<div class="card-body">
+								<div>
+									<p>${data.description}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				`)
+			}
+
+			if(data.youtube_id){
+				target.append(`
+					<div class="card bg-dark">
+						<div class="card-header" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left" type="button" data-toggle="collapse" data-target="#ytCollapse" aria-expanded="true" aria-controls="ytCollapse">
+									Youtube
+								</button>
+							</h2>
+						</div>
+
+						<div id="ytCollapse" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+							<div class="card-body">
+								<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"width="100%" type="text/html" style="min-height:300px" src="https://www.youtube.com/embed/${data.youtube_id}?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0"></iframe>
+							</div>
+						</div>
+					</div>
+				`)
+			}
+			$(".collapse").collapse('hide');
+			$("#header-bg").css("background-image",`url(${data.image})`);
+			$("#member-room-uri").attr("href",data.share_url_live)
+			memb.empty().append(`
+			<div class="">
+				<div class="inblk">
+					<div class="member-pp" style="background-image:url('${data.image}')"></div>
+				</div>
+				<div class="inblk">
+					<h5>${data.main_name}</h5>
+					<p class="text-secondary rounded-lg">${data.room_url_key} | <span id="online-for" style="width: content"></span></p>
+					
+				</div>
+			</div>
+			`);
+
+
+			prevNowOnline = setInterval(onlineFor,1000);
+			$("#exampleModal").modal('show')
+
+			function onlineFor(){
+				$("#online-for").empty().append(
+					`<strong class="text-danger">⬤</strong> online for ${p_uptime(new Date().getTime()/1000 - data.current_live_started_at)}`
+				)
+			}
+
+		})
+
+		$('#exampleModal').on('hidden.bs.modal', function (e) {
+			$("#accordionExample").empty();
+			$("#modal-info").empty();
+			clearInterval(prevNowOnline);
+		})
+
+		function p_uptime(n){
+			var t_d = 24*60**2,
+					t_h = 60**2,
+					d = (n-n%t_d)/t_d,
+					h = (n%t_d - n%t_h)/t_h,
+					m = (n%t_h - n%60)/60,
+					s = Math.floor(n%60);
+
+			return `${d? d+"d ":""}${(d||h)? h+"h ":""}${(h||m)? m+"m ":""}${(m||s)? s+"s":""}`
+
+		}
+	</script>
+</html>
