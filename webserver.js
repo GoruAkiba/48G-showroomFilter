@@ -15,6 +15,14 @@ app.get("/", (req, resp) => {
 
 
 })
+
+app.get("/test", (req, resp) => {
+	// resp.json({status:"ok"});
+
+	resp.sendFile(__dirname+"/views/test.html");
+
+
+})
 // showroom update
 const showroom = require("./showroom.js");
 

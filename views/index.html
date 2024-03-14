@@ -4,6 +4,11 @@
 			Showroom Filter
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon" type="image/x-icon" href="https://image.winudf.com/v2/image1/anAuZGVuYS5zaG93cm9vbV9pY29uXzE1ODMzOTY3NDVfMDkw/icon.png?w=170&fakeurl=1">
+
+		<meta name="theme-color" content="#0D101E"><meta name="msapplication-navbutton-color" content="#0D101E"><meta name="apple-mobile-web-app-status-bar-style" content="#0D101E">
+
+
 		<meta name="description" content="Showroom Visualization. Easy to filter Live-Showroom 48G Member. AKB48, SKE48, NMB48, HKT48, NGT48, STU48, and bit another Member. Katakloncat - GB_Sources">
 		<!-- Bootstrap begin -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -115,6 +120,10 @@
 				background-repeat: no-repeat;
 				background-positiom: center;
 			}
+
+			.input-click{
+				cursor: pointer;
+			}
 		</style>
 
 	</head>
@@ -179,6 +188,7 @@
 	<!-- <script defer type="text/javascript" src="/socket.io/socket.io.js"></script> -->
 	<script>
 		var shApp = {
+			hideOther: false,
 			selector : "mynetwork",
 			container : function(){
 				return document.getElementById(this.selector)
@@ -207,7 +217,7 @@
 						gravitationalConstant: -6350,
 						centralGravity: 0.5,
 						springLength: 160,
-						springConstant: 0.2
+						springConstant: 0.05
 					},
 					minVelocity: 0.5,
 					timestep: 0.4
@@ -230,10 +240,15 @@
 				{id: "keyakizaka46", shape: 'circularImage', image: "/images/KEYAKIZAKA46.png", label: 'KEYAKIZAKA46'},
 				{id: "hinatazaka46", shape: 'circularImage', image: "/images/HINATAZAKA46.png", label: 'HINATAZAKA46'},
         {id: "other", shape: 'circularImage', image: "/images/other.png", label: 'another Idol'},
-				{id: "former", shape: 'circularImage', image: "/images/FORMER.png", label: 'Former members'}
+				{id: "former", shape: 'circularImage', image: "/images/FORMER.png", label: 'Former members'},
+				{id: "rino_sashihin", shape: 'circularImage', image: "/images/rino_sashihin.png", label: 'Sashihin'},
+				{id: "nearly_equal_joy", shape: 'circularImage', image: "/images/nearly_equal_joy.png", label: 'Nearly Equal Joy'},
+				{id: "notequal_me", shape: 'circularImage', image: "/images/notequal_me.png", label: 'Not Equal Me'},
+				{id: "equal_love", shape: 'circularImage', image: "/images/equal_love.png", label: 'Equal Love'}
 			],
 			edgesArr : [
 				{from: "showroom", to: "other"},
+				{from: "showroom", to: "rino_sashihin"},
         {from: "showroom", to: "48G"},
 				{from: "showroom", to: "46G"},
 				{from: "48G", to: "former"},
@@ -247,6 +262,9 @@
 				{from: "46G", to: "nogizaka46"},
 				{from: "46G", to: "keyakizaka46"},
 				{from: "46G", to: "hinatazaka46"},
+				{from: "nearly_equal_joy", to: "rino_sashihin"},
+				{from: "notequal_me", to: "rino_sashihin"},
+				{from: "equal_love", to: "rino_sashihin"},
 			],
 			data : {},
 			network : {},
@@ -301,6 +319,7 @@
 			}	
 		}
 
+		if(parseInt(new URL(window.location.href).searchParams.get("hideOther"))){ shApp.hideOther = true};
 		shApp.exec();
 
 		// web socket
@@ -308,6 +327,7 @@
 		socket.on("init-vis", data => {
 			// console.log(data);
 			data.map(e=>{
+				if(shApp.hideOther && e.to == "other") return;
 				shApp.addData({
 					id: e.room_id,
 					label: e.room_url_key,
@@ -322,6 +342,7 @@
 			// update nodes
 			// add new nodes
 			data.to_update.map(e => {
+				if(shApp.hideOther && e.to == "other") return;
 				shApp.addData({
 					id: e.room_id,
 					label: e.room_url_key,
@@ -377,7 +398,7 @@
 						<div class="card-header" id="headingOne">
 							<h2 class="mb-0">
 								<button class="btn btn-dark btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									Description Room
+									Room Description
 								</button>
 							</h2>
 						</div>
@@ -407,6 +428,36 @@
 						<div id="ytCollapse" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 							<div class="card-body">
 								<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"width="100%" type="text/html" style="min-height:300px" src="https://www.youtube.com/embed/${data.youtube_id}?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0"></iframe>
+							</div>
+						</div>
+					</div>
+				`)
+			}
+
+			if(data.streaming_url_list){
+				var uriStream = data.streaming_url_list.map(e => {
+					return `
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="stream-${e.id}" aria-label="stream-${e.id}" aria-describedby="basic-stream-${e.id}" value="${e.url.replace("L_STREAMING_SPEC_SINGLE_QUALITY_HLS_ALL","ALL Support")}" id="copy-stream-${e.id}">
+						<div class="input-group-append input-click">
+							<span class="input-group-text" id="basic-stream-${e.id}" onclick="copyToClipboard('copy-stream-${e.id}')">${e.label}</span>
+						</div>
+					</div>`
+				})
+				target.append(`
+					<div class="card bg-dark">
+						<div class="card-header" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left" type="button" data-toggle="collapse" data-target="#StreamData" aria-expanded="true" aria-controls="StreamData">
+									hls Stream
+								</button>
+							</h2>
+						</div>
+
+						<div id="StreamData" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+							<div class="card-body">
+								<p>a stream URL through Vlc or another online stream supported media player <br><b>click the label for copy the url</b></p>
+								${uriStream.join(" ")}
 							</div>
 						</div>
 					</div>
@@ -456,6 +507,12 @@
 
 			return `${d? d+"d ":""}${(d||h)? h+"h ":""}${(h||m)? m+"m ":""}${(m||s)? s+"s":""}`
 
+		}
+
+		function copyToClipboard(target) {
+				var targetBox = document.getElementById(target);
+				targetBox.select();
+				document.execCommand("copy");
 		}
 	</script>
 </html>

@@ -1,9 +1,9 @@
 {
-	"categories":[
+	"old_categories":[
 		"Popularity",
 		"Karaoke",
-		"MEN'S",
 		"Idol",
+		"MEN'S",
 		"Talent Model",
 		"Music",
 		"Voice Actors & Anime",
@@ -11,7 +11,26 @@
 		"Virtual",
 		"Non-Professionals"
 	],
+	"categories": [
+		"Popularity", 
+		"Free", 
+		"Idol", 
+		"Talent Model", 
+		"Music", 
+		"Voice Actors & Anime", 
+		"Comedians/Talk Show", 
+		"Virtual", 
+		"MEN'S", 
+		"Karaoke", 
+		"Game", 
+		"DOB"
+	],
 	"data" : [
+		{
+			"room_url_key" : "JKT48_Callie",
+			"note" : null,
+			"category" : 2
+		},
 		{
 			"room_url_key" : "reinakita",
 			"note" : null,
@@ -20,27 +39,27 @@
 		{
 			"room_url_key" : "e86fa3102517",
 			"note" : "kurenyan",
-			"category" : 5
+			"category" : 4
 		},
 		{
 			"room_url_key" : "04e793461162",
 			"note" : "gotomoe",
-			"category" : 5
+			"category" : 4
 		},
 		{
 			"room_url_key" : "f0a6c3354300",
 			"note" : "hijri",
-			"category" : 9
+			"category" : 11
 		},
 		{
 			"room_url_key" : "5029f3347498",
 			"note" : "siori",
-			"category" : 9
+			"category" : 11
 		},
 		{
 			"room_url_key" : "Rino_SASHIHARA",
 			"note" : "sashi",
-			"category" : 4
+			"category" : 3
 		},
 		{
 			"room_url_key" : "iku_nakano",
@@ -50,7 +69,7 @@
 		{
 			"room_url_key" : "ed55e1702678",
 			"note" : "Yuri",
-			"category" : 9
+			"category" : 11
 		}
 	]
 }

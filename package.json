@@ -6,7 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["showroom", "48G", "Vis.js", "socket.io"],
+  "keywords": [
+    "showroom",
+    "48G",
+    "Vis.js",
+    "socket.io"
+  ],
   "author": "goruakiba",
   "license": "GNU GPLv3",
   "dependencies": {
