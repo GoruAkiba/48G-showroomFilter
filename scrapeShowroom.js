@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
+const list_jkt = require("./list_JKT.json")
 
 
 var scrapeShowroom = {
@@ -100,7 +101,7 @@ var scrapeShowroom = {
 			} else if (obj.name == "48g") {
 				var list = []
 				obj.group.map(e => {
-					const newlist = data[e][0]["rooms"];
+					const newlist = e == "jkt48"? list_jkt.data :data[e][0]["rooms"];
 					const newObj = {
 						name: obj.name,
 						to: e,
@@ -110,7 +111,6 @@ var scrapeShowroom = {
 				})
 			}
 		}
-
 		this.caching.push(this.former);
 
 		const dat = {

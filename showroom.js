@@ -15,7 +15,17 @@ var showroom = {
 		const res = await fetch(this.main_server);
 		const data = await res.json();
 		// console.log(data.onlives[2]);
-		var lives = data.onlives[3].lives.filter(e => {
+
+		// lookup for specific genre
+		// 111 => global
+		// 102 => idol
+		// 103 => talent
+		var lives_raw = ([111,102,103]).reduce((A,B) => {
+			const subject_data = data.onlives.find(onlive => onlive.genre_id == B);
+			return [...A, ...subject_data.lives];
+		},[]);
+
+		var lives = lives_raw.filter(e => {
 			if (e.room_id) {
 				e['to'] = this.whatGroup(e.room_url_key);
 				return true;
