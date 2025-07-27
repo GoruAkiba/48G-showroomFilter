@@ -22,6 +22,7 @@ var showroom = {
 		// 103 => talent
 		var lives_raw = ([111,102,103]).reduce((A,B) => {
 			const subject_data = data.onlives.find(onlive => onlive.genre_id == B);
+			if(!subject_data) return A;
 			return [...A, ...subject_data.lives];
 		},[]);
 

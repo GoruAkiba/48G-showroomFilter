@@ -4,7 +4,7 @@
   "description": "Showroom Visualization. Easy to filter Live-Showroom 48G Member. AKB48, SKE48, NMB48, HKT48, NGT48, STU48, and bit another Member. Katakloncat - GB_Sources",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tunnel": "cloudflared tunnel --url http://localhost:3000"
   },
   "keywords": [
     "showroom",
