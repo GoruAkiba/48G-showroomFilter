@@ -83,32 +83,6 @@
             ]
         },
         {
-            "name": "46g",
-            "to": "hinatazaka46",
-            "members": [
-                "46_SARINA_USHIO",
-                "46_YUKA_KAGEYAMA",
-                "46_SHIHO_KATO",
-                "46_KYOKO_SAITO",
-                "46_KUMI_SASAKI",
-                "46_MIREI_SASAKI",
-                "46_MANA_TAKASE",
-                "46_AYAKA_TAKAMOTO",
-                "46_MEI_HIGASHIMURA",
-                "46_MIKU_KANEMURA",
-                "46_HINA_KAWATA",
-                "46_NAO_KOSAKA",
-                "46_SUZUKA_TOMITA",
-                "46_AKARI_NIBU",
-                "46_HIYORI_HAMAGISHI",
-                "46_KONOKA_MATSUDA",
-                "46_HINANO_KAMIMURA",
-                "46_MIKUNI_TAKAHASHI",
-                "46_MARIE_MORIMOTO",
-                "46_HARUYO_YAMAGUCHI"
-            ]
-        },
-        {
             "name": "nearly_equal_joy",
             "to": "nearly_equal_joy",
             "members": [
@@ -483,7 +457,25 @@
                 "48_SOGAWA_SAKI",
                 "48_HAMADA_HIBIKI",
                 "48_FUJII_RIE",
-                "48_MORISUE_HIMENA"
+                "48_MORISUE_HIMENA",
+                "48_INOUE_KUREA",
+                "48_SAKAKI_TOWANA",
+                "48_DOUHO_RUNA",
+                "48_KIHARA_HINAYO",
+                "48_YOKOI_YUINA",
+                "48_FUJITA_AMU",
+                "48_SOGABE_AKO",
+                "48_KABUTAKE_MANA",
+                "48_YAGI_YUUNA",
+                "48_MIYOSHI_MAAYA",
+                "48_TAKAMURA_SHIORI",
+                "48_ISHIMATSU_HARUNA",
+                "48_NONAKA_RIO",
+                "48_HAMADA_MII",
+                "48_KOMATSU_NAYU",
+                "48_SHIMADA_SAYAKA",
+                "48_SAKAZAKI_AI",
+                "48_TANAKA_NANAKO"
             ]
         },
         {

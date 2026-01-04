@@ -23,16 +23,16 @@ var scrapeShowroom = {
 				"roomUrlsSecondGeneration"
 			]
 		},
-		{
-			name: "46g",
-			to: "hinatazaka46",
-			url: "https://campaign.showroom-live.com/hinatazaka46_sr/data/rooms.json",
-			group: [
-				"roomUrlsFirstGeneration",
-				"roomUrlsSecondGeneration",
-				"roomUrlsThirdGeneration"
-			]
-		},
+		// {
+		// 	name: "46g",
+		// 	to: "hinatazaka46",
+		// 	url: "https://campaign.showroom-live.com/hinatazaka46_sr/data/rooms.json",
+		// 	group: [
+		// 		"roomUrlsFirstGeneration",
+		// 		"roomUrlsSecondGeneration",
+		// 		"roomUrlsThirdGeneration"
+		// 	]
+		// },
 		{
 			name: "nearly_equal_joy",
 			to: "nearly_equal_joy",
@@ -72,6 +72,7 @@ var scrapeShowroom = {
 	execute: async function(callback) {
 		for (const obj of this.servers) {
 			const res = await fetch(obj.url);
+			console.log(obj.to);
 			if (obj.url.includes(".json")) {
 				var data = await res.json()
 			} else {
@@ -86,6 +87,7 @@ var scrapeShowroom = {
 				if (obj.group) {
 					obj.group.map(e => {
 						const newlist = obj.name == "48g" ? data[e][0]["rooms"] : data[e];
+						console.log(newlist);
 						list = [...list, ...newlist];
 					})
 				} else {
